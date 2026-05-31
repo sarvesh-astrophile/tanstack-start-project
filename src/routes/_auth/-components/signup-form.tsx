@@ -18,20 +18,14 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-const signupSchema = z
-	.object({
-		name: z.string().min(1, "Name is required."),
-		email: z.email("Please enter a valid email address."),
-		password: z
-			.string()
-			.min(1, "Password is required.")
-			.min(8, "Password must be at least 8 characters."),
-		confirmPassword: z.string().min(1, "Please confirm your password."),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: "Passwords do not match.",
-		path: ["confirmPassword"],
-	});
+const signupSchema = z.object({
+	name: z.string().min(1, "Name is required."),
+	email: z.email("Please enter a valid email address."),
+	password: z
+		.string()
+		.min(1, "Password is required.")
+		.min(8, "Password must be at least 8 characters."),
+});
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 	const form = useForm({
@@ -39,7 +33,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 			name: "",
 			email: "",
 			password: "",
-			confirmPassword: "",
 		},
 		validators: {
 			onSubmit: signupSchema,
@@ -109,10 +102,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 											aria-invalid={isInvalid}
 											autoComplete="email"
 										/>
-										<FieldDescription>
-											We&apos;ll use this to contact you. We will not share your
-											email with anyone else.
-										</FieldDescription>
+
 										{isInvalid && (
 											<FieldError errors={field.state.meta.errors} />
 										)}
@@ -147,41 +137,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 								);
 							}}
 						</form.Field>
-						<form.Field name="confirmPassword">
-							{(field) => {
-								const isInvalid =
-									field.state.meta.isTouched && !field.state.meta.isValid;
-								return (
-									<Field data-invalid={isInvalid}>
-										<FieldLabel htmlFor="confirm-password">
-											Confirm Password
-										</FieldLabel>
-										<Input
-											id="confirm-password"
-											name={field.name}
-											type="password"
-											value={field.state.value}
-											onBlur={field.handleBlur}
-											onChange={(e) => field.handleChange(e.target.value)}
-											aria-invalid={isInvalid}
-											autoComplete="new-password"
-										/>
-										<FieldDescription>
-											Please confirm your password.
-										</FieldDescription>
-										{isInvalid && (
-											<FieldError errors={field.state.meta.errors} />
-										)}
-									</Field>
-								);
-							}}
-						</form.Field>
 						<FieldGroup>
 							<Field>
 								<Button type="submit">Create Account</Button>
-								<Button variant="outline" type="button">
-									Sign up with Google
-								</Button>
 								<FieldDescription className="px-6 text-center">
 									Already have an account? <Link to="/login">Sign in</Link>
 								</FieldDescription>
