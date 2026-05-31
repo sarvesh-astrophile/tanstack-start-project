@@ -17,14 +17,7 @@ import {
 	FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-
-const loginSchema = z.object({
-	email: z.email("Please enter a valid email address."),
-	password: z
-		.string()
-		.min(1, "Password is required.")
-		.min(8, "Password must be at least 8 characters."),
-});
+import { loginSchema } from "@/schemas/auth";
 
 export function LoginForm({
 	className,
@@ -45,7 +38,7 @@ export function LoginForm({
 	});
 
 	return (
-		<Card {...props} className="max-w-md w-full">
+		<Card {...props} className="max-w-sm w-full">
 			<CardHeader>
 				<CardTitle>Login to your account</CardTitle>
 				<CardDescription>

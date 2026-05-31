@@ -1,6 +1,7 @@
 import { useForm } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
 import * as z from "zod";
+import { signupSchema } from "#/schemas/auth";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -17,15 +18,6 @@ import {
 	FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-
-const signupSchema = z.object({
-	name: z.string().min(1, "Name is required."),
-	email: z.email("Please enter a valid email address."),
-	password: z
-		.string()
-		.min(1, "Password is required.")
-		.min(8, "Password must be at least 8 characters."),
-});
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 	const form = useForm({
@@ -44,7 +36,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 	});
 
 	return (
-		<Card {...props} className="w-full max-w-md">
+		<Card {...props} className="w-full max-w-sm">
 			<CardHeader>
 				<CardTitle>Create an account</CardTitle>
 				<CardDescription>
